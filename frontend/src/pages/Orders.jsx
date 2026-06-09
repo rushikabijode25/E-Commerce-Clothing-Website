@@ -10,6 +10,11 @@ const Orders = () => {
   const navigate = useNavigate();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [expandedTracking, setExpandedTracking] = useState({});
+
+  const toggleTracking = (orderId) => {
+    setExpandedTracking(prev => ({ ...prev, [orderId]: !prev[orderId] }));
+  };
 
   useEffect(() => {
     if (!user) {
@@ -109,14 +114,33 @@ const Orders = () => {
                       </div>
                     ))}
                   </div>
-                  
                   <div className="order-card__footer">
                     <div className="order-total">
                       <span className="label">Total Paid</span>
                       <span className="amount">₹{order.total.toLocaleString('en-IN')}</span>
                     </div>
-                    <button className="btn-secondary btn-sm">Support Details</button>
+                    <button className="btn-secondary btn-sm" onClick={() => toggleTracking(order.orderId)}>
+                      {expandedTracking[order.orderId] ? 'Hide Tracking' : 'Track Order'}
+                    </button>
                   </div>
+
+                  {expandedTracking[order.orderId] && (
+                    <div className="order-tracking-container">
+                      <h4>Tracking Timeline</h4>
+                      <div className="tracking-timeline">
+                        {order.trackingHistory && order.trackingHistory.map((track, i) => (
+                          <div key={i} className="tracking-step">
+                            <div className="tracking-step__indicator"></div>
+                            <div className="tracking-step__content">
+                              <div className="tracking-step__title">{track.status}</div>
+                              {track.description && <div className="tracking-step__desc">{track.description}</div>}
+                              <div className="tracking-step__date">{new Date(track.date).toLocaleString()}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))}

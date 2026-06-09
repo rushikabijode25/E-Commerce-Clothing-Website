@@ -67,7 +67,8 @@
             "21"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 2,
@@ -136,7 +137,8 @@
             "20.5"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 3,
@@ -198,7 +200,8 @@
             "21"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 7,
@@ -267,7 +270,8 @@
             "28.5"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 8,
@@ -329,7 +333,8 @@
             "28.5"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 9,
@@ -379,7 +384,8 @@
             "32"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 10,
@@ -424,7 +430,8 @@
             "28.5"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 11,
@@ -474,7 +481,8 @@
             "29"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 12,
@@ -519,7 +527,8 @@
             "29.0"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 13,
@@ -569,7 +578,8 @@
             "45"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 15,
@@ -620,7 +630,8 @@
             "EU 44"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 16,
@@ -670,7 +681,8 @@
             "32"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 17,
@@ -720,7 +732,8 @@
             "30"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 19,
@@ -764,7 +777,8 @@
             "28"
           ]
         ]
-      }
+      },
+      "reviewsArray": []
     },
     {
       "id": 22,
@@ -775,7 +789,8 @@
       "image": "https://images.unsplash.com/photo-1522312346375-d1a52e2b99b3?w=600&h=700&fit=crop",
       "rating": 4.8,
       "reviews": 45,
-      "badge": null
+      "badge": null,
+      "reviewsArray": []
     },
     {
       "id": 24,
@@ -786,7 +801,8 @@
       "image": "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=600&h=700&fit=crop",
       "rating": 4.8,
       "reviews": 21,
-      "badge": "Limited Edition"
+      "badge": "Limited Edition",
+      "reviewsArray": []
     },
     {
       "id": 27,
@@ -797,7 +813,8 @@
       "image": "https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=600&h=700&fit=crop",
       "rating": 4.6,
       "reviews": 89,
-      "badge": "Bestseller"
+      "badge": "Bestseller",
+      "reviewsArray": []
     },
     {
       "id": 28,
@@ -808,7 +825,8 @@
       "image": "https://images.unsplash.com/photo-1533867617858-e7b97e060509?w=600&h=700&fit=crop",
       "rating": 4.9,
       "reviews": 67,
-      "badge": null
+      "badge": null,
+      "reviewsArray": []
     },
     {
       "id": 29,
@@ -819,7 +837,8 @@
       "image": "https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=600&h=700&fit=crop",
       "rating": 4.8,
       "reviews": 14,
-      "badge": "Limited Edition"
+      "badge": "Limited Edition",
+      "reviewsArray": []
     },
     {
       "id": 30,
@@ -830,7 +849,8 @@
       "image": "https://images.unsplash.com/photo-1576566588028-4147f3842f27?w=600&h=700&fit=crop",
       "rating": 4.9,
       "reviews": 42,
-      "badge": null
+      "badge": null,
+      "reviewsArray": []
     },
     {
       "id": 32,
@@ -841,7 +861,8 @@
       "image": "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?w=600&h=700&fit=crop",
       "rating": 4.8,
       "reviews": 24,
-      "badge": "New Arrival"
+      "badge": "New Arrival",
+      "reviewsArray": []
     },
     {
       "id": 33,
@@ -852,7 +873,8 @@
       "image": "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=600&h=700&fit=crop",
       "rating": 4.9,
       "reviews": 53,
-      "badge": "New Arrival"
+      "badge": "New Arrival",
+      "reviewsArray": []
     },
     {
       "id": 36,
@@ -863,7 +885,8 @@
       "image": "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=700&fit=crop",
       "rating": 5,
       "reviews": 24,
-      "badge": "New Arrival"
+      "badge": "New Arrival",
+      "reviewsArray": []
     },
     {
       "id": 37,
@@ -874,7 +897,8 @@
       "image": "https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=700&fit=crop",
       "rating": 4.7,
       "reviews": 56,
-      "badge": null
+      "badge": null,
+      "reviewsArray": []
     },
     {
       "id": 38,
@@ -885,7 +909,8 @@
       "image": "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=600&h=700&fit=crop",
       "rating": 4.6,
       "reviews": 31,
-      "badge": null
+      "badge": null,
+      "reviewsArray": []
     },
     {
       "id": 39,
@@ -896,7 +921,8 @@
       "image": "https://images.unsplash.com/photo-1627123424574-724758594e93?w=600&h=700&fit=crop",
       "rating": 4.9,
       "reviews": 112,
-      "badge": "Bestseller"
+      "badge": "Bestseller",
+      "reviewsArray": []
     },
     {
       "id": 40,
@@ -907,7 +933,8 @@
       "image": "https://images.unsplash.com/photo-1520903920243-00d872a2d1c9?w=600&h=700&fit=crop",
       "rating": 4.8,
       "reviews": 45,
-      "badge": null
+      "badge": null,
+      "reviewsArray": []
     },
     {
       "id": 41,
@@ -918,7 +945,8 @@
       "image": "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=600&h=700&fit=crop",
       "rating": 4.9,
       "reviews": 67,
-      "badge": "Limited Edition"
+      "badge": "Limited Edition",
+      "reviewsArray": []
     },
     {
       "id": 42,
@@ -929,7 +957,8 @@
       "image": "https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=700&fit=crop",
       "rating": 5,
       "reviews": 18,
-      "badge": "Bestseller"
+      "badge": "Bestseller",
+      "reviewsArray": []
     },
     {
       "id": 43,
@@ -940,7 +969,8 @@
       "image": "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&h=700&fit=crop",
       "rating": 4.7,
       "reviews": 29,
-      "badge": null
+      "badge": null,
+      "reviewsArray": []
     },
     {
       "id": 44,
@@ -951,7 +981,8 @@
       "image": "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?w=600&h=700&fit=crop",
       "rating": 4.8,
       "reviews": 38,
-      "badge": "New Arrival"
+      "badge": "New Arrival",
+      "reviewsArray": []
     }
   ],
   "orders": [
@@ -983,7 +1014,14 @@
       "discount": 0,
       "total": 2539,
       "status": "Shipped",
-      "createdAt": "2026-04-03T10:20:00.000Z"
+      "createdAt": "2026-04-03T10:20:00.000Z",
+      "trackingHistory": [
+        {
+          "status": "Placed",
+          "date": "2026-04-03T10:20:00.000Z",
+          "description": "Order has been placed successfully."
+        }
+      ]
     },
     {
       "orderId": "ORD-1002",
@@ -1022,7 +1060,52 @@
       "discount": 200,
       "total": 5137,
       "status": "Delivered",
-      "createdAt": "2026-04-01T14:45:00.000Z"
+      "createdAt": "2026-04-01T14:45:00.000Z",
+      "trackingHistory": [
+        {
+          "status": "Placed",
+          "date": "2026-04-01T14:45:00.000Z",
+          "description": "Order has been placed successfully."
+        }
+      ]
+    },
+    {
+      "orderId": "ORD-1003",
+      "items": [
+        {
+          "id": 1,
+          "name": "Classic Black Hoodie",
+          "selectedSize": "M",
+          "selectedColor": "Black",
+          "quantity": 1,
+          "price": 1999,
+          "image": "https://test.com/img.jpg"
+        }
+      ],
+      "address": {
+        "street": "123 MG Road",
+        "fullName": "Test User",
+        "phone": "9876543210",
+        "city": "Mumbai",
+        "pincode": "400001",
+        "state": "Maharashtra"
+      },
+      "paymentMethod": "COD",
+      "promoCode": null,
+      "subtotal": 1999,
+      "shipping": 40,
+      "discount": 0,
+      "total": 2039,
+      "status": "Pending",
+      "userEmail": "testuser@gmail.com",
+      "createdAt": "2026-04-07T10:27:55.400Z",
+      "trackingHistory": [
+        {
+          "status": "Placed",
+          "date": "2026-04-07T10:27:55.401Z",
+          "description": "Order has been placed successfully."
+        }
+      ]
     }
   ],
   "users": [
@@ -1032,7 +1115,9 @@
       "email": "admin@luxestore.com",
       "password": "password123",
       "role": "admin",
-      "createdAt": "2026-04-01T10:00:00.000Z"
+      "createdAt": "2026-04-01T10:00:00.000Z",
+      "cart": [],
+      "wishlist": []
     },
     {
       "id": 2,
@@ -1040,7 +1125,9 @@
       "email": "admin",
       "password": "rai12345",
       "role": "admin",
-      "createdAt": "2026-04-06T06:39:02.927Z"
+      "createdAt": "2026-04-06T06:39:02.927Z",
+      "cart": [],
+      "wishlist": []
     }
   ],
   "promoCodes": [
@@ -1065,7 +1152,7 @@
   ],
   "counters": {
     "products": 45,
-    "orders": 1002,
+    "orders": 1003,
     "users": 2
   }
 }

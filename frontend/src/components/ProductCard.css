@@ -1,20 +1,21 @@
 .product-card {
   display: block;
   background: #ffffff;
-  border-radius: 24px;
+  border-radius: 20px;
   overflow: hidden;
   text-decoration: none;
-  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  border: 1px solid rgba(0, 0, 0, 0.03);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  box-shadow: 0 10px 25px rgba(2, 44, 34, 0.03);
   height: 100%;
   color: inherit;
   will-change: transform;
 }
 
 .product-card:hover {
-  transform: translateY(-12px);
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(2, 44, 34, 0.08);
+  border-color: rgba(5, 150, 105, 0.1);
 }
 
 .product-card__image-wrapper {

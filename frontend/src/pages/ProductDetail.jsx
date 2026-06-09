@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
-import { FiStar, FiShoppingCart, FiZap, FiChevronLeft, FiInfo, FiCheck } from 'react-icons/fi';
+import { useAuth } from '../context/AuthContext';
+import { FiStar, FiShoppingCart, FiZap, FiChevronLeft, FiInfo, FiCheck, FiUser } from 'react-icons/fi';
 import './ProductDetail.css';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'https://e-commerce-wensite.onrender.com/api');
@@ -20,6 +21,18 @@ const ProductDetail = () => {
   const [sizeError, setSizeError] = useState(false);
   const [colorError, setColorError] = useState(false);
 
+  const { user } = useAuth();
+  const [reviewName, setReviewName] = useState('');
+  const [reviewRating, setReviewRating] = useState(5);
+  const [reviewComment, setReviewComment] = useState('');
+  const [submittingReview, setSubmittingReview] = useState(false);
+
+  useEffect(() => {
+    if (user && user.name) {
+      setReviewName(user.name);
+    }
+  }, [user]);
+
   useEffect(() => {
     const fetchProduct = async () => {
       setLoading(true);
@@ -35,6 +48,27 @@ const ProductDetail = () => {
     fetchProduct();
     window.scrollTo(0, 0);
   }, [id]);
+
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    if (!reviewName.trim() || !reviewComment.trim()) return;
+    setSubmittingReview(true);
+    try {
+      const res = await axios.post(`${API_URL}/products/${product.id}/reviews`, {
+        name: reviewName,
+        rating: reviewRating,
+        comment: reviewComment
+      });
+      setProduct(res.data.product);
+      setReviewComment('');
+      setReviewRating(5);
+    } catch (err) {
+      console.error(err);
+      alert("Failed to submit review");
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
 
   const handleAddToCart = () => {
     let hasError = false;
@@ -249,6 +283,78 @@ const ProductDetail = () => {
               <div className="product-detail__extra">🚚 Free shipping on orders above ₹2,000</div>
               <div className="product-detail__extra">🔄 7-day easy returns</div>
               <div className="product-detail__extra">💳 Cash on Delivery available</div>
+            </div>
+
+            {/* Reviews Section */}
+            <div className="product-detail__reviews-section">
+              <h3>Customer Reviews <span className="review-count">({product.reviews || 0})</span></h3>
+              
+              <div className="reviews-list">
+                {(!product.reviewsArray || product.reviewsArray.length === 0) ? (
+                  <p className="no-reviews">No reviews yet. Be the first to review this product!</p>
+                ) : (
+                  product.reviewsArray.map((rev, idx) => (
+                    <div key={idx} className="review-card">
+                      <div className="review-card__header">
+                        <div className="review-card__user">
+                          <div className="review-card__avatar"><FiUser /></div>
+                          <strong>{rev.name}</strong>
+                        </div>
+                        <div className="review-card__stars">
+                          {[...Array(5)].map((_, i) => (
+                            <FiStar key={i} size={14} className={i < rev.rating ? 'star--filled' : 'star--empty'} />
+                          ))}
+                        </div>
+                      </div>
+                      <p className="review-card__comment">{rev.comment}</p>
+                      <span className="review-card__date">{new Date(rev.date).toLocaleDateString()}</span>
+                    </div>
+                  ))
+                )}
+              </div>
+
+              <div className="review-form-container">
+                <h4>Write a Review</h4>
+                <form onSubmit={handleReviewSubmit} className="review-form">
+                  <div className="form-group">
+                    <label>Your Name</label>
+                    <input 
+                      type="text" 
+                      required 
+                      value={reviewName} 
+                      onChange={e => setReviewName(e.target.value)} 
+                      placeholder="Enter your name"
+                      disabled={!!user?.name}
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>Rating</label>
+                    <div className="rating-select">
+                      {[1, 2, 3, 4, 5].map(star => (
+                        <FiStar 
+                          key={star} 
+                          size={24} 
+                          className={star <= reviewRating ? 'star--filled cursor-pointer' : 'star--empty cursor-pointer'} 
+                          onClick={() => setReviewRating(star)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label>Review</label>
+                    <textarea 
+                      required 
+                      rows="4" 
+                      value={reviewComment} 
+                      onChange={e => setReviewComment(e.target.value)}
+                      placeholder="What did you like or dislike?"
+                    ></textarea>
+                  </div>
+                  <button type="submit" className="btn-primary" disabled={submittingReview}>
+                    {submittingReview ? 'Submitting...' : 'Submit Review'}
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
         </div>

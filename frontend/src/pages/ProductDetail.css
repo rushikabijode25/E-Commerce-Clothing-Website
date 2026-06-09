@@ -406,6 +406,141 @@
   gap: 20px;
 }
 
+/* Reviews Section */
+.product-detail__reviews-section {
+  margin-top: 32px;
+  padding-top: 32px;
+  border-top: 1px solid var(--border);
+}
+
+.product-detail__reviews-section h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.review-count {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.no-reviews {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.9rem;
+  padding: 16px 0;
+}
+
+.review-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  padding: 20px;
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-fast);
+}
+
+.review-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold);
+}
+
+.review-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.review-card__user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-card__avatar {
+  background: var(--bg-hover);
+  color: var(--text-secondary);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-card__user strong {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.review-card__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.review-card__comment {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 12px;
+}
+
+.review-card__date {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.review-form-container {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 24px;
+  border-radius: var(--radius-md);
+}
+
+.review-form-container h4 {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  color: var(--gold);
+}
+
+.review-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.rating-select {
+  display: flex;
+  gap: 8px;
+  padding: 8px 0;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.cursor-pointer:hover {
+  transform: scale(1.1);
+}
+
+.review-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .product-detail__layout {

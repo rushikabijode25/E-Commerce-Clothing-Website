@@ -45,7 +45,7 @@ router.post('/register', (req, res) => {
   db.counters.users = newUser.id;
   
   fs.writeFileSync(dbPath, JSON.stringify(db, null, 2), 'utf8');
-  const token = jwt.sign({ id: newUser.id, role: newUser.role }, JWT_SECRET, { expiresIn: '7d' });
+  const token = jwt.sign({ id: newUser.id, role: newUser.role, email: newUser.email, name: newUser.name }, JWT_SECRET, { expiresIn: '7d' });
   res.status(201).json({ token, user: { id: newUser.id, name, email, role: 'user' } });
 });
 
@@ -56,8 +56,31 @@ router.post('/login', (req, res) => {
   const user = db.users?.find(u => u.email === email && u.password === password);
   if (!user) return res.status(401).json({ message: 'Invalid credentials' });
 
-  const token = jwt.sign({ id: user.id, role: user.role }, JWT_SECRET, { expiresIn: '7d' });
+  const token = jwt.sign({ id: user.id, role: user.role, email: user.email, name: user.name }, JWT_SECRET, { expiresIn: '7d' });
   res.json({ token, user: { id: user.id, name: user.name, email, role: user.role } });
+});
+
+// GET - User Cart & Wishlist
+router.get('/data/:email', (req, res) => {
+  const db = readDB();
+  const user = db.users?.find(u => u.email === req.params.email);
+  if (!user) return res.status(404).json({ message: 'User not found' });
+  
+  res.json({ cart: user.cart || [], wishlist: user.wishlist || [] });
+});
+
+// PUT - Update User Cart & Wishlist
+router.put('/data/:email', (req, res) => {
+  const db = readDB();
+  const index = db.users?.findIndex(u => u.email === req.params.email);
+  if (index === -1) return res.status(404).json({ message: 'User not found' });
+  
+  const { cart, wishlist } = req.body;
+  if (cart !== undefined) db.users[index].cart = cart;
+  if (wishlist !== undefined) db.users[index].wishlist = wishlist;
+  
+  fs.writeFileSync(dbPath, JSON.stringify(db, null, 2), 'utf8');
+  res.json({ message: 'Data synced successfully' });
 });
 
 module.exports = router;

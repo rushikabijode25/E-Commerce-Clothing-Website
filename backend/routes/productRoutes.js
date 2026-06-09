@@ -115,4 +115,32 @@ router.delete('/:id', (req, res) => {
   res.json({ message: 'Product deleted successfully' });
 });
 
+// POST to add a review
+router.post('/:id/reviews', (req, res) => {
+  const db = readDB();
+  const prodId = parseInt(req.params.id);
+  const index = db.products.findIndex(p => p.id === prodId);
+  
+  if (index === -1) {
+    return res.status(404).json({ message: 'Product not found' });
+  }
+
+  const newReview = req.body;
+  if (!db.products[index].reviewsArray) {
+    db.products[index].reviewsArray = [];
+  }
+  
+  newReview.date = new Date().toISOString();
+  db.products[index].reviewsArray.push(newReview);
+  
+  // Recalculate average rating
+  const totalRating = db.products[index].reviewsArray.reduce((sum, r) => sum + r.rating, 0);
+  db.products[index].rating = (totalRating / db.products[index].reviewsArray.length).toFixed(1);
+  db.products[index].reviews = db.products[index].reviewsArray.length;
+
+  writeDB(db);
+
+  res.status(201).json({ message: 'Review added successfully', product: db.products[index] });
+});
+
 module.exports = router;

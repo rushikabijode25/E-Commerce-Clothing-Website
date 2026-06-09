@@ -1,8 +1,9 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { useCart } from './context/CartContext';
 import Navbar from './components/Navbar';
 import CartSidebar from './components/CartSidebar';
 import Footer from './components/Footer';
+import Chatbot from './components/Chatbot';
 import Home from './pages/Home';
 import ProductDetail from './pages/ProductDetail';
 import Checkout from './pages/Checkout';
@@ -41,6 +42,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="products" element={<AdminProducts />} />
           <Route path="orders" element={<AdminOrders />} />
+          <Route path="order" element={<Navigate to="/admin/orders" replace />} />
           <Route path="users" element={<AdminUsers />} />
           <Route path="subscribers" element={<AdminSubscribers />} />
         </Route>
@@ -57,6 +59,7 @@ const UserLayout = ({ children }) => (
       {children}
     </main>
     <Footer />
+    <Chatbot />
   </>
 );
 

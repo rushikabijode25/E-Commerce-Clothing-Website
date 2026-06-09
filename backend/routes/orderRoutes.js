@@ -26,6 +26,16 @@ router.get('/user/:email', (req, res) => {
   res.json(userOrders);
 });
 
+// GET single order by ID
+router.get('/:id', (req, res) => {
+  const db = readDB();
+  const order = db.orders.find(o => o.orderId === req.params.id.toUpperCase());
+  if (!order) {
+    return res.status(404).json({ message: 'Order not found' });
+  }
+  res.json(order);
+});
+
 // POST - Place a new order
 router.post('/', (req, res) => {
   const db = readDB();
@@ -48,7 +58,10 @@ router.post('/', (req, res) => {
     total,
     status: 'Pending',
     userEmail: userEmail || null,
-    createdAt: new Date().toISOString()
+    createdAt: new Date().toISOString(),
+    trackingHistory: [
+      { status: 'Placed', date: new Date().toISOString(), description: 'Order has been placed successfully.' }
+    ]
   };
 
   db.orders.push(order);
@@ -89,6 +102,30 @@ router.get('/promo-codes', (req, res) => {
   const db = readDB();
   const active = db.promoCodes.filter(p => p.active);
   res.json(active);
+});
+
+// POST - Add Tracking update (Admin)
+router.post('/:id/tracking', (req, res) => {
+  const db = readDB();
+  const { status, description } = req.body;
+  const orderIndex = db.orders.findIndex(o => o.orderId === req.params.id);
+  
+  if (orderIndex === -1) {
+    return res.status(404).json({ message: 'Order not found' });
+  }
+  
+  const order = db.orders[orderIndex];
+  if (!order.trackingHistory) order.trackingHistory = [];
+  
+  order.trackingHistory.push({
+    status,
+    description,
+    date: new Date().toISOString()
+  });
+  order.status = status; // also update main status
+  
+  writeDB(db);
+  res.json({ message: 'Tracking updated', trackingHistory: order.trackingHistory });
 });
 
 module.exports = router;

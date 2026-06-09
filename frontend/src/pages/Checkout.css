@@ -470,6 +470,192 @@
   color: var(--text-muted);
 }
 
+/* Payment Gateway Modal */
+.payment-gateway-modal {
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.gateway-card {
+  width: 100%;
+  max-width: 440px;
+  background: #111;
+  border-radius: var(--radius-xl);
+  border: 1px solid #333;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  overflow: hidden;
+  animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes slideUp {
+  from { transform: translateY(40px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.gateway-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  background: #1a1a1a;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.gateway-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1rem;
+}
+
+.gateway-logo svg {
+  color: #4ade80;
+}
+
+.gateway-close {
+  background: transparent;
+  color: var(--text-muted);
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.gateway-close:hover:not(:disabled) {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.gateway-amount-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px;
+  background: linear-gradient(180deg, #1a1a1a 0%, #111 100%);
+}
+
+.gateway-amount-display span {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+
+.gateway-amount-display strong {
+  font-size: 2.5rem;
+  color: var(--gold);
+}
+
+.gateway-form {
+  padding: 0 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gateway-form input {
+  background: #1a1a1a;
+  border: 1px solid #333;
+  color: #fff;
+}
+
+.gateway-form input:focus {
+  border-color: #4ade80;
+  box-shadow: 0 0 0 1px #4ade80;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.gateway-btn {
+  margin-top: 16px;
+  padding: 16px;
+  font-size: 1.05rem;
+  background: #4ade80;
+  color: #000;
+  border: none;
+  font-weight: 600;
+  transition: opacity 0.2s;
+}
+
+.gateway-btn:hover {
+  background: #22c55e;
+  opacity: 1;
+}
+
+.gateway-processing, .gateway-success {
+  padding: 60px 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gateway-processing h4, .gateway-success h4 {
+  font-size: 1.25rem;
+  margin: 16px 0 8px;
+  color: #fff;
+}
+
+.gateway-processing p, .gateway-success p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.success-check {
+  width: 64px; height: 64px;
+  background: rgba(74, 222, 128, 0.2);
+  color: #4ade80;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes scaleIn {
+  0% { transform: scale(0); }
+  100% { transform: scale(1); }
+}
+
+.gateway-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 24px;
+  background: #0a0a0a;
+  border-top: 1px solid #222;
+  font-size: 0.75rem;
+  color: #666;
+}
+
+.card-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.card-icon {
+  font-weight: 700;
+  font-size: 0.7rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #222;
+  color: #888;
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .checkout__layout {

@@ -11,12 +11,16 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     if (token) {
-      // Decode token or fetch user profile (mock decoded for now)
       try {
         const payloadStr = atob(token.split('.')[1]);
         const payload = JSON.parse(payloadStr);
-        // We might not have full name, but we have id and role
-        setUser({ id: payload.id, role: payload.role });
+        // ✅ Now email & name are in JWT payload so they survive page refresh
+        setUser({
+          id: payload.id,
+          role: payload.role,
+          email: payload.email || null,
+          name: payload.name || null
+        });
       } catch (e) {
         setToken(null);
         localStorage.removeItem('luxe_token');

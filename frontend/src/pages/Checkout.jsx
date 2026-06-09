@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
-import { FiMapPin, FiCopy, FiCheck, FiTag, FiPackage, FiArrowLeft, FiShield, FiCreditCard } from 'react-icons/fi';
+import { FiMapPin, FiCopy, FiCheck, FiTag, FiPackage, FiArrowLeft, FiShield, FiCreditCard, FiLock } from 'react-icons/fi';
 import './Checkout.css';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'https://e-commerce-wensite.onrender.com/api');
@@ -10,11 +11,19 @@ const SHIPPING_CHARGE = 40;
 
 const Checkout = () => {
   const { cartItems, subtotal, clearCart } = useCart();
+  const { user } = useAuth();
   const navigate = useNavigate();
 
   const [address, setAddress] = useState({
     fullName: '', phone: '', street: '', city: '', state: '', pincode: ''
   });
+
+  // Auto-fill name from logged-in user
+  useEffect(() => {
+    if (user?.name) {
+      setAddress(prev => ({ ...prev, fullName: prev.fullName || user.name }));
+    }
+  }, [user]);
   const [paymentMethod, setPaymentMethod] = useState('COD');
   const [promoCode, setPromoCode] = useState('');
   const [discount, setDiscount] = useState(0);
@@ -26,6 +35,11 @@ const Checkout = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
   const [orderData, setOrderData] = useState(null);
   const [processing, setProcessing] = useState(false);
+
+  // Payment Gateway State
+  const [showPaymentGateway, setShowPaymentGateway] = useState(false);
+  const [gatewayStep, setGatewayStep] = useState(0); // 0: input, 1: processing, 2: success
+  const [cardDetails, setCardDetails] = useState({ number: '', name: '', expiry: '', cvv: '' });
 
   const total = subtotal + SHIPPING_CHARGE - discount;
 
@@ -85,33 +99,58 @@ const Checkout = () => {
     if (!validateAddress()) return;
     if (cartItems.length === 0) return;
 
+    if (paymentMethod === 'Card') {
+      setShowPaymentGateway(true);
+      return;
+    }
+
     setProcessing(true);
     
-    // Simulate real delay for card/upi processing
+    // Simulate real delay for UPI processing or COD
     const delay = paymentMethod !== 'COD' ? 1500 : 500;
     
     setTimeout(async () => {
-      try {
-        const res = await axios.post(`${API_URL}/orders`, {
-          items: cartItems,
-          address,
-          paymentMethod,
-          promoCode: promoApplied ? promoCode : null,
-          subtotal,
-          shipping: SHIPPING_CHARGE,
-          discount,
-          total,
-          userEmail: user?.email || null
-        });
-        setOrderData(res.data.order);
-        setOrderPlaced(true);
-        clearCart();
-      } catch (err) {
-        alert(err.response?.data?.message || 'Error placing order');
-      } finally {
-        setProcessing(false);
-      }
+      await finalizeOrder();
     }, delay);
+  };
+
+  const finalizeOrder = async () => {
+    try {
+      const res = await axios.post(`${API_URL}/orders`, {
+        items: cartItems,
+        address,
+        paymentMethod,
+        promoCode: promoApplied ? promoCode : null,
+        subtotal,
+        shipping: SHIPPING_CHARGE,
+        discount,
+        total,
+        userEmail: user?.email || null
+      });
+      setOrderData(res.data.order);
+      setOrderPlaced(true);
+      clearCart();
+    } catch (err) {
+      alert(err.response?.data?.message || 'Error placing order');
+    } finally {
+      setProcessing(false);
+    }
+  };
+
+  const processGatewayPayment = (e) => {
+    e.preventDefault();
+    if (cardDetails.number.length < 16 || !cardDetails.name || !cardDetails.expiry || !cardDetails.cvv) return;
+    
+    setGatewayStep(1); // Set to processing
+    
+    setTimeout(() => {
+      setGatewayStep(2); // Set to success
+      setTimeout(() => {
+        setShowPaymentGateway(false);
+        setGatewayStep(0);
+        finalizeOrder();
+      }, 1500);
+    }, 2500);
   };
 
   if (orderPlaced && orderData) {
@@ -419,6 +458,106 @@ const Checkout = () => {
           </div>
         </div>
       </div>
+
+      {showPaymentGateway && (
+        <div className="payment-gateway-modal page-enter">
+          <div className="gateway-card">
+            <div className="gateway-header">
+              <div className="gateway-logo">
+                <FiLock size={18} /> Secure Checkout
+              </div>
+              <button 
+                className="gateway-close" 
+                onClick={() => { setShowPaymentGateway(false); setGatewayStep(0); setCardDetails({ number: '', name: '', expiry: '', cvv: '' }); }}
+                disabled={gatewayStep > 0}
+              >✕</button>
+            </div>
+            
+            <div className="gateway-amount-display">
+              <span>Amount to Pay</span>
+              <strong>₹{total.toLocaleString('en-IN')}</strong>
+            </div>
+
+            {gatewayStep === 0 && (
+              <form onSubmit={processGatewayPayment} className="gateway-form">
+                <div className="form-group">
+                  <label>Card Number</label>
+                  <input 
+                    type="text" 
+                    placeholder="0000 0000 0000 0000" 
+                    maxLength="16"
+                    value={cardDetails.number}
+                    onChange={e => setCardDetails({...cardDetails, number: e.target.value.replace(/\D/g, '')})}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Cardholder Name</label>
+                  <input 
+                    type="text" 
+                    placeholder="Name on card" 
+                    value={cardDetails.name}
+                    onChange={e => setCardDetails({...cardDetails, name: e.target.value})}
+                    required
+                  />
+                </div>
+                <div className="form-row">
+                  <div className="form-group">
+                    <label>Expiry (MM/YY)</label>
+                    <input 
+                      type="text" 
+                      placeholder="MM/YY" 
+                      maxLength="5"
+                      value={cardDetails.expiry}
+                      onChange={e => setCardDetails({...cardDetails, expiry: e.target.value})}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>CVV</label>
+                    <input 
+                      type="password" 
+                      placeholder="123" 
+                      maxLength="3"
+                      value={cardDetails.cvv}
+                      onChange={e => setCardDetails({...cardDetails, cvv: e.target.value.replace(/\D/g, '')})}
+                      required
+                    />
+                  </div>
+                </div>
+                <button type="submit" className="btn-primary gateway-btn">
+                  Pay ₹{total.toLocaleString('en-IN')}
+                </button>
+              </form>
+            )}
+
+            {gatewayStep === 1 && (
+              <div className="gateway-processing">
+                <div className="spinner"></div>
+                <h4>Processing Payment</h4>
+                <p>Please do not close or refresh this window.</p>
+              </div>
+            )}
+
+            {gatewayStep === 2 && (
+              <div className="gateway-success">
+                <div className="success-check"><FiCheck size={32} /></div>
+                <h4>Payment Successful</h4>
+                <p>Redirecting back to store...</p>
+              </div>
+            )}
+            
+            <div className="gateway-footer">
+              <span>Powered by StandardSecure™</span>
+              <div className="card-icons">
+                <span className="card-icon visa">VISA</span>
+                <span className="card-icon mc">MasterCard</span>
+                <span className="card-icon rupay">RuPay</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
